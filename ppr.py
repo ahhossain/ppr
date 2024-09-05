@@ -61,5 +61,9 @@ print('Connected to DB')
 cur = conn.cursor()
 cur.execute("DROP TABLE IF EXISTS register")
 df.to_sql('regster', conn, if_exists='replace')
+conn.close()
 
 shutil.copy2(dbfilename, '.\\ppr\\')
+
+os.remove(filename)
+os.remove(dbfilename)
