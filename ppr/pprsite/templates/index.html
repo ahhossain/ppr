@@ -1,0 +1,117 @@
+<html>
+    <style>
+        .tableText {
+            font-family: Arial, Helvetica;
+            font-weight: normal;
+        }
+
+        .tableHeading {
+            font-family: Arial, Helvetica;
+            color: #ee6e72;
+        }
+
+        body {background-color: #2bbbad;}
+    </style>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <h1 class="center-align">Search Listings</h1>
+            <div class="card row">
+                <form method="get" class="col s12">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <span class="tableHeading"<label for="address">Address</label></span>
+                            <input id="address" type="text" name="q" value="{{ request.GET.q }}" class="validate">
+                        </div>
+                        <div class="input-field col s6">
+                            <span class="tableHeading"<label for="county">County</label></span>
+                            <input in="county" type="text" name="county" value="{{ request.GET.county }}" class="validate">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s3">
+                            <span class="tableHeading"<label for="min_price">Min Price</label></span>
+                            <input id="min_price" type="number" name="min_price" value="{{ request.GET.min_price }}" class="validate">
+                        </div>
+                        <div class="input-field col s3">
+                            <span class="tableHeading"<label for="max_price">Max Price</label></span>
+                            <input id="max_price" type="number" name="max_price" value="{{ request.GET.max_price }}" class="validate">
+                        </div>
+                        <div class="input-field col s3">
+                            <span class="tableHeading"<label for="start_date">Start Date</label></span>
+                            <input id="start_date" type="date" name="start_date" placeholder="" value="{{ request.GET.start_date }}" class="validate">
+                        </div>
+                        <div class="input-field col s3">
+                            <span class="tableHeading"<label for="end_date">End Date</label></span>
+                            <input id="end_date" type="date" name="end_date" placeholder="" value="{{ request.GET.end_date }}" class="validate">
+                        </div>
+                    </div>
+                    <div>
+                        <button class="btn waves-effect waves-light col s2 offset-s5" type="submit">Search</button>
+                    </div>
+                </form>
+            </div>
+            <div class="card">
+                <table class="striped">
+                    <tr>
+                        <th class="tableHeading">Date</th>
+                        <th class="tableHeading">Address</th>
+                        <th class="tableHeading">County</th>
+                        <th class="tableHeading">Eircode</th>
+                        <th class="tableHeading">Price</th>
+                    </tr>
+                    {%for entry in page_obj %}
+                    <tr>
+                        <th class="tableText">{{entry.Date|date:'Y/m/d'}}</th>
+                        <th class="tableText">{{entry.Address}}</th>
+                        <th class="tableText">{{entry.County}}</th>
+                        <th class="tableText">{{entry.Eircode}}</th>
+                        <th class="tableText">{{entry.Price}}</th>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="pagination center-align">
+                <span class="step-links">
+                    <ul class="pagination">
+                    {% with current_page=page_obj.number %}
+
+                        {% if page_obj.has_previous %}
+                            <li class="waves-effect"><a href="?{% if request.GET.q %}q={{ request.GET.q }}&{% endif %}{% if request.GET.county %}county={{ request.GET.county }}&{% endif %}{% if request.GET.min_price %}min_price={{ request.GET.min_price }}&{% endif %}{% if request.GET.max_price %}max_price={{ request.GET.max_price }}&{% endif %}{% if request.GET.start_date %}start_date={{ request.GET.start_date }}&{% endif %}{% if request.GET.end_date %}end_date={{ request.GET.end_date }}&{% endif %}page=1">First</a></li>
+                            <li class="waves-effect"><a href="?{% if request.GET.q %}q={{ request.GET.q }}&{% endif %}{% if request.GET.county %}county={{ request.GET.county }}&{% endif %}{% if request.GET.min_price %}min_price={{ request.GET.min_price }}&{% endif %}{% if request.GET.max_price %}max_price={{ request.GET.max_price }}&{% endif %}{% if request.GET.start_date %}start_date={{ request.GET.start_date }}&{% endif %}{% if request.GET.end_date %}end_date={{ request.GET.end_date }}&{% endif %}page={{ page_obj.previous_page_number }}">Previous</a></li>
+                        {% else %}
+
+                        {% endif %}
+                        {% for num in page_obj.paginator.page_range %}
+                            {% if num > current_page|add:"-5" and num < current_page|add:"5" %}
+                                {% if page_obj.number == num %}
+                                    <!--span>{{ num }}</span-->
+                                    <li class="active"><a href="#!">{{ num }}</a></li>
+                                {% else %}
+                                    <li class="waves-effect"><a href="?{% if request.GET.q %}q={{ request.GET.q }}&{% endif %}{% if request.GET.min_price %}min_price={{ request.GET.min_price }}&{% endif %}{% if request.GET.max_price %}max_price={{ request.GET.max_price }}&{% endif %}{% if request.GET.start_date %}start_date={{ request.GET.start_date }}&{% endif %}{% if request.GET.end_date %}end_date={{ request.GET.end_date }}&{% endif %}page={{ num }}">{{ num }}</a></li>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                        {% if page_obj.has_next %}
+                            <li class="waves-effect"><a href="?{% if request.GET.q %}q={{ request.GET.q }}&{% endif %}{% if request.GET.min_price %}min_price={{ request.GET.min_price }}&{% endif %}{% if request.GET.max_price %}max_price={{ request.GET.max_price }}&{% endif %}{% if request.GET.start_date %}start_date={{ request.GET.start_date }}&{% endif %}{% if request.GET.end_date %}end_date={{ request.GET.end_date }}&{% endif %}page={{ page_obj.next_page_number }}">Next</a></li>
+                            <li class="waves-effect"><a href="?{% if request.GET.q %}q={{ request.GET.q }}&{% endif %}{% if request.GET.min_price %}min_price={{ request.GET.min_price }}&{% endif %}{% if request.GET.max_price %}max_price={{ request.GET.max_price }}&{% endif %}{% if request.GET.start_date %}start_date={{ request.GET.start_date }}&{% endif %}{% if request.GET.end_date %}end_date={{ request.GET.end_date }}&{% endif %}page={{ page_obj.paginator.num_pages }}">Last</a></li>
+                        {% endif %}
+                    </ul>
+                    <span class="current">
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                    </span>
+                    {% endwith %}
+                </span>
+            </div>
+        </div>
+    </body>
+</html>
