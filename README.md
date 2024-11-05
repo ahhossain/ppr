@@ -21,4 +21,4 @@ A page for useful statistics like:
   - Average price by area in a given year
   - Price increases of the same property over the years
   - Areas with most sales
-  - 
+  - Number of sales by of each month, quarter, year
