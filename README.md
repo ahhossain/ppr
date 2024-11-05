@@ -2,7 +2,7 @@
 
 Check out the site at **https://amith12355.pythonanywhere.com/pprsite/**
 
-This is a simple website to browser the Irish Property Price Register which is a record of all residential property sales (https://www.propertypriceregister.ie/)
+This is a simple website to browse the Irish Property Price Register which is a record of all residential property sales (https://www.propertypriceregister.ie/)
 
 It is provided as a CSV file making it difficult to access and navigate. Goal of this project is to make this information easily accessible
 
