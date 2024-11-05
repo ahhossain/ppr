@@ -11,9 +11,9 @@ File location: 'https://www.propertypriceregister.ie/website/npsra/ppr/npsra-ppr
 There are two main parts of this project:
 
 1) ppr_csv_to_db.py : This downlaods the PPR-ALL.zip file, converts to a pandas dataframe and then satnitizes and restructures it to create ppr/ppr.db  
-2) A django project that expose the data via a web app using Django ORM and Materialize UI framework.
+2) A django project that exposes the data via a web app using Django ORM and Materialize CSS Library.
 
-Listings can be fitlered by Address, County, Min and Max Prices, Date of Sale  
+Listings can be filtered by Address, County, Min and Max Prices, Date of Sale  
 
 Features to add:  
 Sort via column  
